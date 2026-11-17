@@ -3,7 +3,7 @@ export type Language = 'es' | 'en';
 type Role = { company: string; role: string; period: string; details: string[]; tech: string };
 type Project = { name: string; description: string; tech: string; url?: string; linkLabel?: string };
 
-export const email = "isaacdavidgordilloromero3@gmail.com"
+export const email = import.meta.env.PUBLIC_CONTACT_EMAIL;
 export const portfolio = {
   es: {
     nav: [['#sobre-mi', 'sobre mí'], ['#experiencia', 'experiencia'], ['#proyectos', 'proyectos'], ['#contacto', 'contacto']],

@@ -24,7 +24,10 @@ const ids =
         projects: "projects",
         contact: "contact",
       };
-const alternate = lang === "es" ? "/en/" : "/";
+const baseUrl = import.meta.env.BASE_URL;
+const homeUrl = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+const englishUrl = `${homeUrl}en/`;
+const alternate = lang === "es" ? englishUrl : homeUrl;
 ---
 
 <main id="content">
@@ -34,7 +37,7 @@ const alternate = lang === "es" ? "/en/" : "/";
     >
       <a
         class="brand"
-        href={lang === "es" ? "/" : "/en/"}
+        href={lang === "es" ? homeUrl : englishUrl}
         aria-label="MixzuDev home"
       >
         <span class="brand-word">mixzu</span>
