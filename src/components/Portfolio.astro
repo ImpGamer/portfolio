@@ -1,0 +1,805 @@
+---
+import profile from "../../assets/images/ojoscerrados_bocacerrada-removebg-preview.png";
+import spanishCv from "../../assets/docs/CV_David_Romero_ES.pdf";
+import englishCv from "../../assets/docs/CV_David_Romero_EN.pdf";
+import { portfolio, email, type Language } from "../data/portfolio";
+import "animate.css";
+
+interface Props {
+  lang: Language;
+}
+const { lang } = Astro.props;
+const copy = portfolio[lang];
+const ids =
+  lang === "es"
+    ? {
+        about: "sobre-mi",
+        experience: "experiencia",
+        projects: "proyectos",
+        contact: "contacto",
+      }
+    : {
+        about: "about",
+        experience: "experience",
+        projects: "projects",
+        contact: "contact",
+      };
+const alternate = lang === "es" ? "/en/" : "/";
+---
+
+<main id="content">
+  <header class="hero shell">
+    <nav
+      aria-label={lang === "es" ? "Navegación principal" : "Main navigation"}
+    >
+      <a
+        class="brand"
+        href={lang === "es" ? "/" : "/en/"}
+        aria-label="MixzuDev home"
+      >
+        <span class="brand-word">mixzu</span>
+        <span class="terminal-cursor" aria-hidden="true"></span>
+      </a>
+      <div class="nav-links">
+        {copy.nav.map(([href, label]) => (
+          <a href={href}>{label}</a>
+        ))}
+        <a
+          class="language"
+          href={alternate}
+          hreflang={lang === "es" ? "en" : "es"}
+          lang={lang === "es" ? "en" : "es"}
+        >
+          {copy.language}
+        </a>
+      </div>
+    </nav>
+
+    <div class="hero-grid">
+      <div class="hero-copy animate__animated animate__fadeInUp">
+        <p class="eyebrow">✦ {copy.greeting}</p>
+        <h1>
+          Mixzu
+          <br />
+          <em>Dev</em>
+        </h1>
+        <p class="real-name">David Romero</p>
+        <p class="role">{copy.title}</p>
+        <p class="tagline">
+          {copy.subtitle}
+          <br />
+          {copy.intro}
+        </p>
+        <div class="actions">
+          <a class="button primary" href={`#${ids.projects}`}>
+            {copy.cta} <span>→</span>
+          </a>
+          <a
+            class="button download-cv"
+            href={lang === "es" ? spanishCv : englishCv}
+            download={lang === "es" ? "MixzuDev-CV-ES.pdf" : "MixzuDev-CV-EN.pdf"}
+          >
+            {copy.cv} <span aria-hidden="true">↓</span>
+          </a>
+          <a class="button ghost" href={`#${ids.contact}`}>
+            {copy.contact}
+          </a>
+        </div>
+      </div>
+      <div class="portrait-wrap floating-portrait-wrap">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="sparkle s-one">✦</div>
+        <div class="sparkle s-two">✦</div>
+        <div class="sparkle s-three">♡</div>
+        <div class="portrait-card">
+          <img
+            src={profile.src}
+            width={profile.width}
+            height={profile.height}
+            alt={
+              lang === "es"
+                ? "Ilustración de perfil de MixzuDev"
+                : "MixzuDev profile illustration"
+            }
+          />
+        </div>
+        <p class="status">
+          <span></span>
+          {lang === "es"
+            ? "disponible para colaborar"
+            : "available to collaborate"}
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <section class="about section shell" id={ids.about}>
+    <div class="section-label">
+      <span>01</span> {copy.aboutTitle}
+    </div>
+    <div class="about-grid">
+      <p class="lead">{copy.about}</p>
+      <div class="skills" aria-label={copy.skillsTitle}>
+        <h2>{copy.skillsTitle}</h2>
+        {copy.skills.map(([label, list]) => (
+          <div class="skill">
+            <p>{label}</p>
+            <span>{list}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="experience section shell" id={ids.experience}>
+    <div class="section-label">
+      <span>02</span> {copy.experienceTitle}
+    </div>
+    <div class="timeline">
+      {copy.roles.map((role) => (
+        <article class="role-card animate__animated animate__fadeInUp">
+          <div class="role-heading">
+            <div>
+              <p class="period">{role.period}</p>
+              <h2>{role.company}</h2>
+              <h3>{role.role}</h3>
+            </div>
+            <span class="pixel-star">✦</span>
+          </div>
+          <ul>
+            {role.details.map((detail) => (
+              <li>{detail}</li>
+            ))}
+          </ul>
+          <p class="tech">{role.tech}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="projects section shell" id={ids.projects}>
+    <div class="section-label">
+      <span>03</span> {copy.projectsTitle}
+    </div>
+    <div class="project-grid">
+      {copy.projects.map((project, index) => (
+        <article
+          class:list={[
+            "project-card",
+            "animate__animated",
+            "animate__fadeInUp",
+            index === 0 && "featured",
+          ]}
+        >
+          <div class="project-number">0{index + 1}</div>
+          <div>
+            <h2>{project.name}</h2>
+            <p>{project.description}</p>
+          </div>
+          <footer>
+            <span>{project.tech}</span>
+            {project.url && (
+              <a href={project.url} target="_blank" rel="noreferrer">
+                {project.linkLabel}
+              </a>
+            )}
+          </footer>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="education section shell">
+    <div class="section-label">
+      <span>04</span> {copy.educationTitle}
+    </div>
+    <div class="education-grid">
+      <div>
+        {copy.education.map((item) => (
+          <p>✦ {item}</p>
+        ))}
+        <h2>
+          {lang === "es" ? "Formación complementaria" : "Additional training"}
+        </h2>
+        {copy.certifications.map((item) => (
+          <p>✦ {item}</p>
+        ))}
+      </div>
+      <p class="language-list">⌁ {copy.languages}</p>
+    </div>
+  </section>
+
+  <section class="contact shell" id={ids.contact}>
+    <div class="contact-inner">
+      <p class="eyebrow">✦ {lang === "es" ? "contacto" : "contact"}</p>
+      <h2>{copy.contactTitle}</h2>
+      <p>{copy.contactText}</p>
+      <a class="email" href={`mailto:${email}`}>
+          {email} <span>↗</span>
+      </a>
+      <div class="socials">
+        <a href="https://github.com/ImpGamer" target="_blank" rel="noreferrer">
+          GitHub
+        </a>
+        <a
+          href="https://www.linkedin.com/in/david-g-ba27742b2/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          LinkedIn
+        </a>
+        <a
+          href="https://nullitystudio.com/home"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Nullity Studio
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer shell">
+  <span>© {new Date().getFullYear()} MixzuDev</span>
+  <span>
+    {copy.footer} <span aria-hidden="true">♡</span>
+  </span>
+</footer>
+
+<style>
+  :global(body) {
+    background: #171425;
+    background-image: radial-gradient(#4b4166 0.65px, transparent 0.65px);
+    background-size: 17px 17px;
+  }
+  :global(.animate__animated) {
+    --animate-duration: 0.8s;
+  }
+  .shell {
+    width: min(1120px, calc(100% - 2.5rem));
+    margin: auto;
+  }
+  .hero {
+    min-height: 720px;
+    padding-top: 5.5rem;
+  }
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem max(1.25rem, calc((100vw - 1120px) / 2));
+    background: rgb(23 20 37 / 92%);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgb(101 89 121 / 55%);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.12em;
+    color: #ff8eaf;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.1em;
+    text-decoration: none;
+  }
+  .terminal-cursor {
+    display: inline-block;
+    width: 0.58em;
+    height: 0.92em;
+    background: #ffe36e;
+    vertical-align: -0.08em;
+    animation: terminal-blink 1.05s steps(1, end) 0s infinite normal both;
+  }
+  @keyframes terminal-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.8rem, 2vw, 1.6rem);
+  }
+  .nav-links a {
+    color: #d8d0e6;
+    font-size: 0.72rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .nav-links a:hover {
+    color: #ffb7ce;
+  }
+  .nav-links .language {
+    border: 1px solid #7a6c9b;
+    color: #ffe36e;
+    padding: 0.42rem 0.55rem;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+    align-items: center;
+    min-height: 610px;
+    gap: 2rem;
+  }
+  .eyebrow {
+    margin: 0 0 1.05rem;
+    color: #ffe36e;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    margin: 0;
+    color: #fff9f0;
+    font-family: Georgia, serif;
+    font-size: clamp(4.3rem, 10vw, 8.2rem);
+    line-height: 0.76;
+    letter-spacing: -0.075em;
+  }
+  .hero h1 em {
+    color: #c8a3ff;
+    font-style: italic;
+  }
+  .real-name {
+    margin: 0.7rem 0 0;
+    color: #aaa0b7;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .role {
+    margin: 1.1rem 0 0.55rem;
+    color: #ffb7ce;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 700;
+  }
+  .tagline {
+    color: #bdb4cb;
+    max-width: 34rem;
+    font-family: Georgia, serif;
+    font-size: 1.08rem;
+    line-height: 1.6;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 2.1rem;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .primary {
+    background: #ffb7ce;
+    color: #251c38;
+    box-shadow: 5px 5px 0 #765b99;
+  }
+  .primary:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 #765b99;
+  }
+  .download-cv {
+    background: #ed5266;
+    color: #fff9f0;
+    box-shadow: 5px 5px 0 #8f354d;
+  }
+  .download-cv:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 #8f354d;
+  }
+  .ghost {
+    border: 1px solid #716187;
+    color: #e8dff3;
+  }
+  .portrait-wrap {
+    position: relative;
+    min-height: 440px;
+    display: grid;
+    place-items: center;
+  }
+  .portrait-card {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 410px);
+    overflow: hidden;
+    border: 2px solid #bca3e5;
+    border-radius: 48% 52% 46% 54% / 40% 42% 58% 60%;
+    background: linear-gradient(145deg, #58456f, #29213c);
+    box-shadow: 10px 12px 0 #332644;
+  }
+  .portrait-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: translateY(18px) scale(1.1);
+    filter: drop-shadow(0 12px 10px #171425);
+  }
+  .floating-portrait-wrap {
+    animation: portrait-float 4s ease-in-out infinite;
+  }
+  @keyframes portrait-float {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -32px;
+    }
+  }
+  .orbit {
+    position: absolute;
+    border: 1px dashed #d8b0ff;
+    border-radius: 50%;
+    opacity: 0.65;
+  }
+  .orbit-one {
+    width: 96%;
+    height: 69%;
+    transform: rotate(-20deg);
+  }
+  .orbit-two {
+    width: 76%;
+    height: 94%;
+    transform: rotate(32deg);
+    border-color: #ffb7ce;
+  }
+  .sparkle {
+    position: absolute;
+    z-index: 3;
+    color: #ffe36e;
+    font-size: 1.5rem;
+  }
+  .s-one {
+    top: 8%;
+    right: 3%;
+  }
+  .s-two {
+    bottom: 15%;
+    left: 1%;
+    color: #ffb7ce;
+  }
+  .s-three {
+    top: 18%;
+    left: 8%;
+    color: #c8a3ff;
+    font-size: 2rem;
+  }
+  .status {
+    position: absolute;
+    z-index: 4;
+    bottom: 0;
+    right: 3%;
+    margin: 0;
+    padding: 0.5rem 0.65rem;
+    background: #fff9f0;
+    color: #2c2440;
+    font-size: 0.65rem;
+    font-weight: 700;
+    transform: rotate(-3deg);
+  }
+  .status span {
+    display: inline-block;
+    width: 0.48rem;
+    height: 0.48rem;
+    margin-right: 0.4rem;
+    border-radius: 50%;
+    background: #6acb88;
+  }
+  .section {
+    padding: 6rem 0 0;
+  }
+  .section-label {
+    margin-bottom: 2rem;
+    color: #ffb7ce;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .section-label span {
+    color: #ffe36e;
+    margin-right: 0.7rem;
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.9fr;
+    gap: clamp(2rem, 8vw, 7rem);
+  }
+  .lead {
+    margin: 0;
+    color: #f2eafa;
+    font-family: Georgia, serif;
+    font-size: clamp(1.55rem, 3vw, 2.4rem);
+    line-height: 1.34;
+  }
+  .skills {
+    border-top: 1px solid #655979;
+  }
+  .skills h2 {
+    font-size: 1rem;
+    color: #ffe36e;
+  }
+  .skill {
+    padding: 1rem 0;
+    border-bottom: 1px solid #655979;
+  }
+  .skill p {
+    margin: 0 0 0.35rem;
+    color: #ffb7ce;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+  }
+  .skill span {
+    color: #c9c0d5;
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+  .timeline {
+    border-left: 1px solid #6d607d;
+  }
+  .role-card {
+    position: relative;
+    padding: 0 0 2.4rem 2rem;
+  }
+  .role-card::before {
+    content: "";
+    position: absolute;
+    top: 0.35rem;
+    left: -0.35rem;
+    width: 0.62rem;
+    height: 0.62rem;
+    background: #ffe36e;
+    border: 2px solid #171425;
+  }
+  .role-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .period {
+    margin: 0 0 0.45rem;
+    color: #998da8;
+    font-size: 0.72rem;
+  }
+  .role-card h2 {
+    margin: 0;
+    color: #fff9f0;
+    font-family: Georgia, serif;
+    font-size: 1.65rem;
+  }
+  .role-card h3 {
+    margin: 0.3rem 0 1rem;
+    color: #ffb7ce;
+    font-size: 0.82rem;
+    font-weight: 400;
+  }
+  .pixel-star {
+    color: #c8a3ff;
+    font-size: 1.5rem;
+  }
+  .role-card ul {
+    max-width: 48rem;
+    margin: 0;
+    padding-left: 1.1rem;
+    color: #c9c0d5;
+    font-family: Georgia, serif;
+    font-size: 0.96rem;
+    line-height: 1.55;
+  }
+  .tech {
+    display: inline-block;
+    margin: 1rem 0 0;
+    color: #ffe36e;
+    font-size: 0.7rem;
+  }
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 250px;
+    padding: 1.5rem;
+    border: 1px solid #655979;
+    background: rgba(35, 28, 53, 0.88);
+    transition:
+      transform 0.18s ease,
+      border-color 0.18s ease;
+  }
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: #ffb7ce;
+  }
+  .project-card.featured {
+    grid-column: span 2;
+    min-height: 280px;
+    background: linear-gradient(125deg, #443657, #2b233d 60%, #58416a);
+  }
+  .project-number {
+    margin-bottom: auto;
+    color: #ffe36e;
+    font-size: 0.75rem;
+  }
+  .project-card h2 {
+    margin: 1.8rem 0 0.6rem;
+    color: #fff9f0;
+    font-family: Georgia, serif;
+    font-size: 1.7rem;
+  }
+  .project-card p {
+    color: #c9c0d5;
+    font-family: Georgia, serif;
+    font-size: 0.94rem;
+    line-height: 1.5;
+  }
+  .project-card footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.7rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    color: #a69bb6;
+    font-size: 0.67rem;
+  }
+  .project-card footer a {
+    color: #ffb7ce;
+    text-underline-offset: 0.25rem;
+  }
+  .education-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2rem;
+    padding: 1.5rem;
+    border: 1px solid #655979;
+    background: #201a30;
+    color: #d8d0e6;
+    font-family: Georgia, serif;
+    line-height: 1.55;
+  }
+  .education-grid p {
+    margin: 0 0 0.75rem;
+  }
+  .education-grid .language-list {
+    color: #ffe36e;
+  }
+  .contact {
+    margin-top: 6rem;
+    padding: 5rem clamp(1.5rem, 7vw, 6rem);
+    background: #ffb7ce;
+    color: #2c2440;
+    text-align: center;
+  }
+  .contact-inner {
+    max-width: 740px;
+    margin: auto;
+  }
+  .contact .eyebrow {
+    color: #765b99;
+  }
+  .contact h2 {
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: clamp(2.4rem, 5vw, 4.4rem);
+    letter-spacing: -0.05em;
+  }
+  .contact-inner > p:not(.eyebrow) {
+    font-family: Georgia, serif;
+    line-height: 1.5;
+  }
+  .email {
+    display: inline-block;
+    margin: 1rem 0 2rem;
+    color: #2c2440;
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 2px solid #2c2440;
+  }
+  .email span {
+    color: #765b99;
+  }
+  .socials {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+  }
+  .socials a {
+    color: #4b3961;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-underline-offset: 0.25rem;
+  }
+  .site-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 1.5rem 0;
+    color: #9387a4;
+    font-size: 0.65rem;
+  }
+  @media (max-width: 720px) {
+    .hero {
+      min-height: auto;
+    }
+    .nav-links {
+      gap: 0.65rem;
+    }
+    .nav-links a:not(.language) {
+      display: none;
+    }
+    .hero-grid,
+    .about-grid,
+    .education-grid {
+      grid-template-columns: 1fr;
+    }
+    .hero-copy {
+      padding-top: 3.5rem;
+    }
+    .portrait-wrap {
+      min-height: 365px;
+      margin-top: 1.5rem;
+    }
+    .portrait-card {
+      max-width: 330px;
+    }
+    .section {
+      padding-top: 4rem;
+    }
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+    .project-card.featured {
+      grid-column: auto;
+      min-height: 250px;
+    }
+    .contact {
+      margin-top: 4rem;
+      padding-block: 4rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition: none !important;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.animate__animated) {
+      animation: none !important;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .terminal-cursor {
+      animation: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .floating-portrait-wrap {
+      animation: none;
+    }
+  }
+</style>

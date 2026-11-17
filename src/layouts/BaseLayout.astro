@@ -1,0 +1,35 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  lang: 'es' | 'en';
+}
+
+const { title, description, lang } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#171425" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#content">{lang === 'es' ? 'Saltar al contenido' : 'Skip to content'}</a>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root { color-scheme: dark; font-family: "Courier New", Courier, monospace; background: #171425; color: #fff9f0; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; min-width: 320px; background: #171425; }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 3px solid #ffe36e; outline-offset: 4px; }
+  .skip-link { position: fixed; z-index: 20; top: .75rem; left: .75rem; transform: translateY(-200%); padding: .7rem 1rem; background: #fff9f0; color: #171425; font-weight: 700; }
+  .skip-link:focus { transform: translateY(0); }
+</style>

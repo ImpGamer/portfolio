@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "skills": {
+    "add-integration": {
+      "source": "incluud/astro-agent-skills",
+      "commit": "4b4355ecea8ef4f68c9025f3de5a73c27df59310",
+      "sourceType": "github",
+      "skillPath": "skills/add-integration/SKILL.md",
+      "computedHash": "209cdcbef339fec119c09e64a4ecd8fdaaad74a523924e33b7b103953e6a1aa2"
+    },
+    "astro-best-practices": {
+      "source": "incluud/astro-agent-skills",
+      "commit": "4b4355ecea8ef4f68c9025f3de5a73c27df59310",
+      "sourceType": "github",
+      "skillPath": "skills/astro-best-practices/SKILL.md",
+      "computedHash": "c1985bff9075848cd7670e72f49e72f06a53a24881580c6e2bf9b010b30527a7"
+    },
+    "content-collection": {
+      "source": "incluud/astro-agent-skills",
+      "commit": "4b4355ecea8ef4f68c9025f3de5a73c27df59310",
+      "sourceType": "github",
+      "skillPath": "skills/content-collection/SKILL.md",
+      "computedHash": "487695b59504ec046f3ff3b48992ae079b8b5fa3a8d4c8afb831a3a395eefd3b"
+    },
+    "create-component": {
+      "source": "incluud/astro-agent-skills",
+      "commit": "4b4355ecea8ef4f68c9025f3de5a73c27df59310",
+      "sourceType": "github",
+      "skillPath": "skills/create-component/SKILL.md",
+      "computedHash": "dfaeec3b9170c8d5f9c933113a1b458e7f4d3dcfb97be9f63e4730f70fb3fdda"
+    }
+  }
+}
